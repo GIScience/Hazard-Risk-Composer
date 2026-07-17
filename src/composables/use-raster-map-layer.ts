@@ -1,4 +1,4 @@
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import type { ComputedRef } from "vue";
 import type maplibregl from "maplibre-gl";
 import type {
@@ -41,10 +41,13 @@ export function useRasterMapLayer(options: UseRasterMapLayerOptions) {
 
   if (options.bounds) {
     const boundsGetter = options.bounds;
+    // Fit the map to the bounds when they first appear. We only want to do this
+    const hasFitBounds = ref(false);
     watch(
       [boundsGetter, options.map],
       ([bounds, map]) => {
-        if (!bounds || !map) return;
+        if (!bounds || !map || hasFitBounds.value) return;
+        hasFitBounds.value = true;
         map.fitBounds(
           [
             [bounds[0], bounds[1]],

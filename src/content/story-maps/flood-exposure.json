@@ -5,9 +5,15 @@
     "version": 1,
     "locale": "en",
     "updatedAt": "2026-07-07",
-    "notes": "Text fields support inline markdown. **bold** should be styled with the brand accent (the blue highlights in the design). All colors and example figures are illustrative placeholders."
+    "notes": ""
   },
   "storyMap": {
+    "hero": {
+      "image": "/floods.jpg",
+      "alt": "Flood hazard illustration",
+      "title": "Flood Exposure Story Map For Myanmar, Thailand",
+      "subtitle": "Understand how flood exposure indicators are produced and what they mean."
+    },
     "sidebar": {
       "icon": "flood",
       "title": "Flood Exposure Story Map",
@@ -164,34 +170,13 @@
         "title": "Flood-depth threshold",
         "hasInfoIcon": true,
         "control": {
-          "type": "slider",
-          "id": "depth-threshold",
-          "label": "Show areas with depth above:",
-          "unit": "cm",
-          "min": 0,
-          "max": 200,
-          "value": 30,
-          "ticks": [
+          "type": "segmented",
+          "id": "overlay-type",
+          "options": [
             {
-              "value": 0,
-              "label": "0 cm"
-            },
-            {
-              "value": 30,
-              "label": "30 cm",
+              "value": "30",
+              "label": "30cm",
               "selected": true
-            },
-            {
-              "value": 50,
-              "label": "50 cm"
-            },
-            {
-              "value": 100,
-              "label": "100 cm"
-            },
-            {
-              "value": 200,
-              "label": "200 cm"
             }
           ]
         },

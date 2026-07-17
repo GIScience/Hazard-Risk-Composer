@@ -22,8 +22,6 @@ const layerConfig = ref<layerConfigType | undefined>(defaultLayerConfig.value);
 watch(defaultLayerConfig, (config) => {
   layerConfig.value = config;
 });
-
-
 </script>
 
 <template>
@@ -34,7 +32,7 @@ watch(defaultLayerConfig, (config) => {
     :class="{ 'is-revealed': revealed }"
   >
     <div
-      class="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] h-full"
+      class="grid grid-rows-1 lg:grid-rows-[minmax(0,2fr)_minmax(0,3fr)] h-full"
     >
       <div class="border-b border-gray-200 p-6 lg:border-b-0 lg:border-r">
         <h3 class="flex items-center gap-1.5 text-sm font-bold text-gray-900">
@@ -81,7 +79,7 @@ watch(defaultLayerConfig, (config) => {
         </div>
       </div>
 
-      <StoryMapPanel :layer="layerConfig" v-if="layerConfig">
+      <StoryMapPanel :layer="layerConfig">
         <template v-if="$slots.map" #default="{ layerId }">
           <slot name="map" :layer-id="layerId" />
         </template>

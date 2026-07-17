@@ -5,6 +5,7 @@ import { useScrollSpy } from "@/composables/useScrollSpy";
 import StoryMapNavbar from "./StoryMapNavbar.vue";
 import StorySection from "./StorySection.vue";
 import StoryCallouts from "./StoryCallouts.vue";
+import StoryMapHero from "./../story-map/StoryMapHero.vue";
 import Icon from "./Icon.vue";
 
 const props = defineProps<{ config: StoryMapConfig }>();
@@ -16,8 +17,16 @@ const { activeId, scrollTo } = useScrollSpy(
 </script>
 
 <template>
-  <div class="px-4 py-6">
-    <div class="flex flex-col gap-8 lg:flex-row lg:gap-10">
+  <div class="relative flex min-h-screen space-y-8 w-full flex-col bg-gray-100">
+    <!-- hero -->
+    <StoryMapHero
+      :id="props.config.id"
+      :title="sm.hero.title"
+      :subtitle="sm.hero.subtitle"
+    />
+    <div
+      class="flex flex-col gap-8 lg:flex-row lg:gap-10 mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 lg:px-8"
+    >
       <!-- sidebar -->
       <aside class="lg:w-[23rem] lg:flex-none">
         <div class="lg:sticky lg:top-24 p-6">
@@ -66,7 +75,7 @@ const { activeId, scrollTo } = useScrollSpy(
         </header>
 
         <div
-          class="mt-4 overflow-hidden rounded-xl border border-gray-200 bg-white"
+          class="mt-4 overflow-hidden rounded-xl space-y-4 border-gray-200"
         >
           <StorySection
             v-for="section in sm.sections"
