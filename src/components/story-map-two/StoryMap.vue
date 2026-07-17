@@ -25,7 +25,7 @@ const { activeId, scrollTo } = useScrollSpy(
       :subtitle="sm.hero.subtitle"
     />
     <div
-      class="flex flex-col gap-8 lg:flex-row lg:gap-10 mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 lg:px-8"
+      class="flex flex-col gap-8 lg:flex-row lg:gap-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8"
     >
       <!-- sidebar -->
       <aside class="lg:w-[23rem] lg:flex-none">
