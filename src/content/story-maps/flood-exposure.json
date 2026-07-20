@@ -15,7 +15,7 @@
       "subtitle": "Understand how flood exposure indicators are produced and what they mean."
     },
     "sidebar": {
-      "icon": "flood",
+      "icon": "mdi-home-flood",
       "title": "Flood Exposure Story Map",
       "subtitle": "Understand how flood exposure indicators are produced and what they mean.",
       "steps": [
@@ -52,47 +52,14 @@
       ],
       "aside": {
         "variant": "info",
-        "icon": "info",
+        "icon": "mdi-information",
         "title": "About this story map",
         "body": "This page explains the concept behind flood exposure indicators. Numbers are examples for illustration only."
       }
     },
     "header": {
-      "title": "What does \u201cchildren under 5 exposed to a 50-year flood event above 30 cm\u201d mean?",
-      "description": "It estimates how many children under 5 are living in areas that could be flooded with more than 30 cm of water during a flood that has a 1% chance of being exceeded in any given year.",
-      "equation": {
-        "terms": [
-          {
-            "kind": "operand",
-            "image": "/floods.jpg",
-            "alt": "Flood hazard illustration",
-            "label": "Flood hazard",
-            "sublabel": "(50-year event)"
-          },
-          {
-            "kind": "operator",
-            "symbol": "+"
-          },
-          {
-            "kind": "operand",
-            "image": "/floods.jpg",
-            "alt": "Population illustration",
-            "label": "Population",
-            "sublabel": "(children under 5)"
-          },
-          {
-            "kind": "operator",
-            "symbol": "="
-          },
-          {
-            "kind": "result",
-            "image": "/img/story/exposed.svg",
-            "alt": "Exposed population illustration",
-            "label": "Exposed population",
-            "sublabel": null
-          }
-        ]
-      }
+      "title": "The Core Concept: What does \u201cchildren under 5 exposed to a 50-year flood event above 30 cm\u201d mean ?",
+      "description": "It sounds complex, but it’s simply a combination of Hazard (where the water goes) + Population (who is there). Let's break down how we calculate this, step by step, without the GIS jargon. It estimates how many children under 5 are living in areas that could be flooded with more than 30 cm of water during a flood that has a 1% chance of being exceeded in any given year. To make this actionable, we combine three things: Flood Hazard + Population = Exposed Population"
     },
     "sections": [
       {
@@ -100,13 +67,14 @@
         "number": 1,
         "title": "Flood scenario (return period)",
         "hasInfoIcon": true,
+        "icon": "mdi-water",
         "control": {
           "type": "segmented",
           "id": "return-period",
           "options": [
             {
               "value": "10",
-              "label": "10-year",
+              "label": "10-years",
               "selected": true,
               "layerConfig": {
                 "type": "raster",
@@ -118,7 +86,7 @@
             },
             {
               "value": "50",
-              "label": "50-year",
+              "label": "50-years",
               "layerConfig": {
                 "type": "cog",
                 "layerId": "flood-extent",
@@ -129,7 +97,7 @@
             },
             {
               "value": "100",
-              "label": "100-year",
+              "label": "100-years",
               "layerConfig": {
                 "type": "raster",
                 "layerId": "flood-extent",
@@ -140,7 +108,7 @@
             },
             {
               "value": "500",
-              "label": "500-year",
+              "label": "500-years",
               "layerConfig": {
                 "type": "raster",
                 "layerId": "flood-extent",
@@ -153,15 +121,16 @@
         },
         "note": {
           "variant": "info",
-          "icon": "info",
-          "body": "A 50-year flood is larger than a 10-year flood, but smaller than 100- or 500-year floods."
+          "icon": "mdi-information",
+          "body": " \u201c50-year return period flood\u201d does not mean it happens exactly once every 50 years. It means there is a 1% chance of a flood this size being exceeded in any given year. Naturally, a 50-year flood covers a larger area than a 10-year flood, but a smaller area than 100- or 500-year events."
         },
         "map": {
           "controls": [
             "home",
             "zoom-in",
             "zoom-out"
-          ]
+          ],
+          "showOpacityControl": true
         }
       },
       {
@@ -183,7 +152,7 @@
         "note": {
           "variant": "info",
           "icon": "info",
-          "body": "Only grid cells with flood depth above 30 cm are considered in this indicator."
+          "body": "Depth matters for survival and logistics. Only grid cells with a flood depth strictly above 30 cm are considered in this indicator, filtering out areas with minor water accumulation"
         },
         "map": {
           "layerId": "flood-depth-50yr",
@@ -242,9 +211,14 @@
           ]
         },
         "dataset": {
-          "icon": "grid",
+          "icon": "mdi-grid",
           "title": "Population grid (100m)",
           "source": "WorldPop (2020)"
+        },
+          "note": {
+          "variant": "info",
+          "icon": "info",
+          "body": "By stacking the hazard map over the demographic grid, we pinpoint exactly where human settlements intersect with dangerous water levels."
         },
         "map": {
           "layerId": "population-grid-100m",
@@ -291,7 +265,7 @@
         "note": {
           "variant": "info",
           "icon": "info",
-          "body": "Only the selected population group is counted in the exposed area."
+          "body": "Humanitarian resources are limited and must be prioritized. Only the selected population group located within that specific exposed area is counted."
         },
         "map": {
           "layerId": "exposed-children-under5-points",

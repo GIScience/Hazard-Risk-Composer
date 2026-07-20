@@ -6,6 +6,12 @@ export interface StoryMapConfig {
   app: AppConfig;
   storyMap: StoryMapContent;
   footer: FooterConfig;
+  hero:{
+    title: string;
+    subtitle: string;
+    alt: string;
+    image: string;
+  }
 }
 
 export interface Meta {
@@ -87,6 +93,7 @@ export interface Section {
   number: number;
   title: string;
   hasInfoIcon?: boolean;
+  icon?: string;
   control?: Control;
   note?: Note;
   dataset?: Dataset;
@@ -160,6 +167,7 @@ export interface MapConfig {
   legend?: Legend;
   controls?: string[];
   results?: Results;
+  showOpacityControl?: boolean;
 }
 export interface Results {
   title: string;

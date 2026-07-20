@@ -8,34 +8,21 @@ const DEFAULT_SUBTITLE =
 
 const props = withDefaults(
   defineProps<{
-    id?: string;
-    title?: string;
-    subtitle?: string;
+    title: string;
+    subtitle: string;
   }>(),
   {
     id: "vulnerability",
   },
 );
 
-const { file } = useMarkdownFile("story-maps", () => props.id);
-
-const title = computed(
-  () =>
-    props.title ??
-    (file.value?.frontmatter.title as string | undefined) ??
-    DEFAULT_TITLE,
-);
-const subtitle = computed(
-  () =>
-    props.subtitle ??
-    (file.value?.frontmatter.subtitle as string | undefined) ??
-    DEFAULT_SUBTITLE,
-);
+const title = computed(() => props.title ?? DEFAULT_TITLE);
+const subtitle = computed(() => props.subtitle ?? DEFAULT_SUBTITLE);
 </script>
 
 <template>
   <section
-    class="relative flex h-[calc(100vh-40rem)] w-full items-center justify-center bg-slate-900 overflow-hidden"
+    class="relative flex h-[calc(100vh-7rem)] w-full items-center justify-center bg-slate-900 overflow-hidden"
   >
     <div
       class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white"
@@ -43,7 +30,7 @@ const subtitle = computed(
       <h1 class="mb-4 text-2xl font-bold sm:text-3xl md:text-4xl text-white">
         {{ title }}
       </h1>
-      <p class="max-w-xl text-base sm:text-lg md:text-xl text-white">
+      <p class="max-w-xl text-sm sm:text-base md:text-lg text-white">
         {{ subtitle }}
       </p>
     </div>

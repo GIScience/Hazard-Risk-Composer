@@ -6,7 +6,6 @@ import StoryMapNavbar from "./StoryMapNavbar.vue";
 import StorySection from "./StorySection.vue";
 import StoryCallouts from "./StoryCallouts.vue";
 import StoryMapHero from "./../story-map/StoryMapHero.vue";
-import Icon from "./Icon.vue";
 
 const props = defineProps<{ config: StoryMapConfig }>();
 const sm = computed(() => props.config.storyMap);
@@ -20,20 +19,19 @@ const { activeId, scrollTo } = useScrollSpy(
   <div class="relative flex min-h-screen space-y-8 w-full flex-col bg-gray-100">
     <!-- hero -->
     <StoryMapHero
-      :id="props.config.id"
       :title="sm.hero.title"
       :subtitle="sm.hero.subtitle"
     />
     <div
-      class="flex flex-col gap-8 lg:flex-row lg:gap-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8"
+      class="flex flex-col gap-8 lg:flex-row lg:gap-10 w-full px-4 py-8 sm:px-6 lg:px-8"
     >
       <!-- sidebar -->
-      <aside class="lg:w-[23rem] lg:flex-none">
-        <div class="lg:sticky lg:top-24 p-6">
+      <aside class="lg:w-[30rem] lg:flex-none">
+        <div class="lg:sticky lg:top-40 px-4">
           <div class="mb-5 flex items-start gap-3">
-            <span class="mt-0.5 text-heigit-red"
-              ><Icon name="waves" class="h-7 w-7"
-            /></span>
+            <span class="mt-0.5 text-heigit-red">
+              <v-icon :icon="sm.sidebar.icon" size="28" />
+            </span>
             <div>
               <h1 class="text-xl font-bold leading-tight text-gray-900">
                 {{ sm.sidebar.title }}
@@ -54,7 +52,7 @@ const { activeId, scrollTo } = useScrollSpy(
             <div
               class="flex items-center gap-2 text-sm font-semibold text-heigit-red"
             >
-              <Icon name="info" class="h-4 w-4" />
+              <v-icon :icon="sm.sidebar.aside.icon" size="20" />
               {{ sm.sidebar.aside.title }}
             </div>
             <p class="mt-1.5 text-xs leading-relaxed text-gray-600">
@@ -74,9 +72,7 @@ const { activeId, scrollTo } = useScrollSpy(
           <!-- <StoryEquation class="mt-6" :terms="sm.header.equation.terms" /> -->
         </header>
 
-        <div
-          class="mt-4 overflow-hidden rounded-xl space-y-4 border-gray-200"
-        >
+        <div class="mt-4 overflow-hidden rounded-xl space-y-4">
           <StorySection
             v-for="section in sm.sections"
             :key="section.id"

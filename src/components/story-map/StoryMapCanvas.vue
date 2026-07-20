@@ -2,6 +2,7 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import Map from "@/components/map/map.vue";
 import COGLayer from "@/components/map/COGLayer.vue";
+import { cn } from "@/utils/cn";
 const props = withDefaults(
   defineProps<{
     center?: [number, number];
@@ -16,6 +17,7 @@ const props = withDefaults(
     rasterMin?: number;
     rasterMax?: number;
     mode?: "rgb" | "ramp" | "categorical";
+    showOpacityControl?: boolean;
   }>(),
   {
     center: () => [20, 10],
@@ -25,12 +27,14 @@ const props = withDefaults(
     interactive: true,
     layerId: "story-map-raster",
     mode: "rgb",
+    showOpacityControl: false,
   },
 );
 
 const el = ref<HTMLElement | null>(null);
 const isVisible = ref(false);
 const isLoaded = ref(false);
+const layerOpacity = ref(1);
 
 let intersectionObserver: IntersectionObserver | null = null;
 
@@ -70,9 +74,39 @@ onBeforeUnmount(() => {
 <template>
   <figure ref="el" data-no-reveal class="h-full">
     <div
-      class="relative overflow-hidden h-full border border-slate-200 bg-slate-100 shadow-sm transition-all duration-700 ease-out"
+      class="relative overflow-hidden h-[calc(100vh_-_19rem)] rounded-md border border-slate-200 bg-slate-100 shadow-sm transition-all duration-700 ease-out"
       :class="isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'"
     >
+      <!-- Layer Opacity Control -->
+      <div
+        v-if="showOpacityControl"
+        class="absolute top-3 left-3 z-40 bg-white rounded-md p-2 flex flex-col gap-1.5 mb-2 shadow-md"
+      >
+        <label
+          :class="
+            cn(
+              'block font-bold uppercase tracking-widest whitespace-nowrap text-slate-500 text-[9px]',
+            )
+          "
+        >
+          Opacity:
+          <span class="font-extrabold text-slate-700">
+            {{ Math.round(layerOpacity * 100) }}%
+          </span>
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          v-model.number="layerOpacity"
+          :class="
+            cn(
+              'w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-heigit-red h-1.5',
+            )
+          "
+        />
+      </div>
       <Map
         v-if="isVisible"
         :map-style="mapStyle"
@@ -87,6 +121,7 @@ onBeforeUnmount(() => {
             :source-url="rasterUrl"
             :layer-id="layerId"
             :color-scheme="rasterColorScheme"
+            :opacity="layerOpacity"
             :min="rasterMin"
             :max="rasterMax"
             continuous

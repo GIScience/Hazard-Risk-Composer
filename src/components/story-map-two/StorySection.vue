@@ -28,20 +28,18 @@ watch(defaultLayerConfig, (config) => {
   <section
     :id="section.id"
     ref="el"
-    class="story-section scroll-mt-24 border-t h-[calc(100vh-40rem)] border-gray-200 first:border-t-0"
+    class="story-section scroll-mt-24 h-full border-gray-200 bg-white border rounded-md"
     :class="{ 'is-revealed': revealed }"
   >
-    <div
-      class="grid grid-rows-1 lg:grid-rows-[minmax(0,2fr)_minmax(0,3fr)] h-full"
-    >
-      <div class="border-b border-gray-200 p-6 lg:border-b-0 lg:border-r">
+    <div class="flex flex-col gap-y-5">
+      <div class="h-full p-3">
         <h3 class="flex items-center gap-1.5 text-sm font-bold text-gray-900">
           <span class="text-gray-400">{{ section.number }}.</span>
           {{ section.title }}
-          <Icon
+          <v-icon
             v-if="section.hasInfoIcon"
-            name="info"
-            class="h-3.5 w-3.5 text-gray-300"
+            :icon="section.icon"
+            class="h-3.5 w-3.5 text-heigit-red"
           />
         </h3>
 
@@ -71,15 +69,15 @@ watch(defaultLayerConfig, (config) => {
           v-if="section.note"
           class="mt-4 flex gap-2 rounded-lg bg-blue-50 p-3 text-xs leading-relaxed text-gray-600"
         >
-          <Icon
-            name="info"
-            class="mt-0.5 h-3.5 w-3.5 flex-none text-blue-500"
+          <v-icon
+            :icon="section.note.icon"
+            class="mt-0.5 h-3.5 w-3.5 flex-none text-heigit-red"
           />
           <p>{{ section.note.body }}</p>
         </div>
       </div>
 
-      <StoryMapPanel :layer="layerConfig">
+      <StoryMapPanel :control="section.map" :layer="layerConfig">
         <template v-if="$slots.map" #default="{ layerId }">
           <slot name="map" :layer-id="layerId" />
         </template>
