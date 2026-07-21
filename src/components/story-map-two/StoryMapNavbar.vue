@@ -46,7 +46,7 @@ function state(i: number): "done" | "active" | "todo" {
 
         <button
           type="button"
-          class="pb-6 text-left"
+          class="pb-14 text-left"
           @click="emit('select', step.sectionRef)"
         >
           <h3

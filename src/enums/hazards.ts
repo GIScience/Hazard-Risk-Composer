@@ -5,7 +5,7 @@
  */
 export const HazardPrefix = {
   FLOOD: "flo",
-  CYCLONE: "cyc"
+  CYCLONE: "cyc",
 } as const;
 
 export type HazardPrefix = (typeof HazardPrefix)[keyof typeof HazardPrefix];
@@ -17,10 +17,9 @@ export interface HazardConfig {
 }
 
 export const HAZARDS: HazardConfig[] = [
+  { prefix: HazardPrefix.FLOOD, label: "Flood", keyword: "flood" },
   { prefix: HazardPrefix.CYCLONE, label: "Cyclone", keyword: "cyclone" },
-  { prefix: HazardPrefix.FLOOD, label: "Flood", keyword: "flood" }
 ];
-
 
 export function resolveHazardPrefix(disasterKey: string): string {
   const lower = disasterKey.toLowerCase();

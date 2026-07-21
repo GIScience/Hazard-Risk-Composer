@@ -230,7 +230,11 @@ function handleMapLoad(mapInstance: maplibregl.Map) {
 
 async function updateLayer() {
   const mapInstance = map.value;
-  if (!mapInstance || !mapInstance.isStyleLoaded()) return;
+  if (!mapInstance) return;
+  if (!mapInstance.isStyleLoaded()) {
+    mapInstance.once("idle", updateLayer);
+    return;
+  }
 
   if (!props.pmtilesUrl) {
     if (mapInstance.getLayer("risk-layer-highlight"))
@@ -428,124 +432,136 @@ defineExpose({
         v-if="pmtilesUrl"
         :class="
           cn(
-            'absolute z-[60] left-4 flex flex-col gap-2 rounded-lg bg-white/90 shadow-sm backdrop-blur-md',
-            props.isMobile
-              ? ' bottom-36 w-45 px-2 py-1.5'
-              : 'top-8 w-60 rounded-2xl px-3 py-2',
+            'absolute z-[60] left-4 flex flex-col gap-2 rounded-lg bg-white/90 shadow-sm backdrop-blur-md transition-[width] duration-300 ease-in-out',
+            props.isMobile ? 'bottom-36 px-2 py-1.5' : 'top-8 rounded-md px-3 py-2',
+            isLayersCollapsed
+              ? props.isMobile
+                ? 'w-10'
+                : 'w-12'
+              : props.isMobile
+                ? 'w-45'
+                : 'w-60',
           )
         "
       >
         <div v-if="riskViewMode" class="flex flex-col">
           <div class="flex flex-col gap-1">
             <button
-              class="flex items-center justify-between gap-2"
+              :class="
+                cn(
+                  'flex items-center gap-2 text-slate-500 transition-colors hover:text-heigit-red',
+                  isLayersCollapsed ? 'justify-center' : 'justify-between',
+                )
+              "
               @click="isLayersCollapsed = !isLayersCollapsed"
+              :title="isLayersCollapsed ? 'Expand layers' : 'Minimize layers'"
             >
-              <label
-                :class="
-                  cn(
-                    'block font-bold uppercase tracking-widest whitespace-nowrap text-slate-500',
-                    props.isMobile ? 'text-[8px]' : 'text-[11px]',
-                  )
-                "
-              >
-                Layers:
-              </label>
-              <div class="flex items-center gap-1">
-                <span
-                  v-if="isViewingCustomData"
-                  :class="
-                    cn(
-                      'rounded-full bg-heigit-red/10 font-extrabold uppercase tracking-wider whitespace-nowrap text-heigit-red',
-                      props.isMobile
-                        ? 'px-1.5 py-0.5 text-[7px]'
-                        : 'px-2 py-0.5 text-[8px]',
-                    )
-                  "
-                  title="This layer is built from your uploaded custom data"
-                >
-                  Viewing Custom Data
-                </span>
-                <button
-                  type="button"
-                  class="text-slate-500 transition-colors hover:text-heigit-red"
-                  :title="
-                    isLayersCollapsed ? 'Expand layers' : 'Minimize layers'
-                  "
-                >
-                  <v-icon
-                    :icon="
-                      isLayersCollapsed ? 'mdi-chevron-down' : 'mdi-chevron-up'
-                    "
-                    size="18"
-                  />
-                </button>
-              </div>
-            </button>
-
-            <div v-if="!isLayersCollapsed" class="flex flex-col gap-1">
-              <button
-                v-for="dimension in dimensions"
-                :key="dimension.value"
-                @click="selectDimension(dimension.value)"
-                :class="
-                  cn(
-                    'flex items-center justify-between rounded text-left font-bold transition-colors whitespace-nowrap',
-                    props.isMobile
-                      ? 'px-1.5 py-0.5 text-[9px]'
-                      : 'px-2 py-2 text-xs',
-                    riskViewMode === dimension.value
-                      ? 'bg-heigit-red text-white'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
-                  )
-                "
-              >
-                <div class="flex items-center gap-2">
-                  <v-icon :icon="dimension.icon" size="18" />
-                  <span>{{ dimension.label }}</span>
-                </div>
-                <v-icon
-                  @click.stop="emit('click:info')"
-                  icon="mdi-information-slab-circle-outline"
-                  size="15"
-                  :class="
-                    cn(
-                      'ml-1 text-heigit-red',
-                      riskViewMode === dimension.value && 'text-white',
-                    )
-                  "
-                />
-              </button>
-
-              <v-divider class="my-2 bg-slate-200/70" />
-
-              <div class="flex flex-col gap-1.5 mb-2">
+              <template v-if="isLayersCollapsed">
+                <v-icon icon="mdi-layers" size="24" />
+              </template>
+              <template v-else>
                 <label
                   :class="
                     cn(
                       'block font-bold uppercase tracking-widest whitespace-nowrap text-slate-500',
-                      props.isMobile ? 'text-[8px]' : 'text-[9px]',
+                      props.isMobile ? 'text-[8px]' : 'text-[11px]',
                     )
                   "
                 >
-                  Opacity:
-                  <span class="font-extrabold text-slate-700">
-                    {{ Math.round(layerOpacity * 100) }}%
-                  </span>
+                  Layers:
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.05"
-                  v-model.number="layerOpacity"
+                <div class="flex items-center gap-1">
+                  <span
+                    v-if="isViewingCustomData"
+                    :class="
+                      cn(
+                        'rounded-full bg-heigit-red/10 font-extrabold uppercase tracking-wider whitespace-nowrap text-heigit-red',
+                        props.isMobile
+                          ? 'px-1.5 py-0.5 text-[7px]'
+                          : 'px-2 py-0.5 text-[8px]',
+                      )
+                    "
+                    title="This layer is built from your uploaded custom data"
+                  >
+                    Viewing Custom Data
+                  </span>
+                  <v-icon icon="mdi-arrow-collapse" size="18" />
+                </div>
+              </template>
+            </button>
+
+            <div
+              :class="
+                cn(
+                  'grid transition-[grid-template-rows] duration-300 ease-in-out',
+                  isLayersCollapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]',
+                )
+              "
+            >
+              <div class="flex flex-col gap-1 overflow-hidden min-h-0">
+                <button
+                  v-for="dimension in dimensions"
+                  :key="dimension.value"
+                  @click="selectDimension(dimension.value)"
                   :class="
                     cn(
-                      'w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-heigit-red',
-                      props.isMobile ? 'h-1' : 'h-1.5',
+                      'flex items-center justify-between rounded text-left font-bold transition-colors whitespace-nowrap',
+                      props.isMobile
+                        ? 'px-1.5 py-0.5 text-[9px]'
+                        : 'px-2 py-2 text-xs',
+                      riskViewMode === dimension.value
+                        ? 'bg-heigit-red text-white'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
                     )
                   "
-                />
+                >
+                  <div class="flex items-center gap-2">
+                    <v-icon :icon="dimension.icon" size="18" />
+                    <span>{{ dimension.label }}</span>
+                  </div>
+                  <!-- <v-icon
+                    @click.stop="emit('click:info')"
+                    icon="mdi-information-slab-circle-outline"
+                    size="15"
+                    :class="
+                      cn(
+                        'ml-1 text-heigit-red',
+                        riskViewMode === dimension.value && 'text-white',
+                      )
+                    "
+                  /> -->
+                </button>
+
+                <v-divider class="my-2 bg-slate-200/70" />
+
+                <div class="flex flex-col gap-1.5 mb-2">
+                  <label
+                    :class="
+                      cn(
+                        'block font-bold uppercase tracking-widest whitespace-nowrap text-slate-500',
+                        props.isMobile ? 'text-[8px]' : 'text-[9px]',
+                      )
+                    "
+                  >
+                    Opacity:
+                    <span class="font-extrabold text-slate-700">
+                      {{ Math.round(layerOpacity * 100) }}%
+                    </span>
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.05"
+                    v-model.number="layerOpacity"
+                    :class="
+                      cn(
+                        'w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-heigit-red',
+                        props.isMobile ? 'h-1' : 'h-1.5',
+                      )
+                    "
+                  />
+                </div>
               </div>
             </div>
           </div>

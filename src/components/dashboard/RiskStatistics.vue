@@ -8,6 +8,7 @@ import DemographicsTab from "@/components/dashboard/statistics/DemographicsTab.v
 import IndicatorsTab from "@/components/dashboard/statistics/IndicatorsTab.vue";
 import WeightsTab from "@/components/dashboard/statistics/WeightsTab.vue";
 import TableTab from "@/components/dashboard/statistics/TableTab.vue";
+import MetadataTab from "@/components/dashboard/statistics/MetadataTab.vue";
 
 const props = defineProps<{
   data: any[];
@@ -25,7 +26,13 @@ const emit = defineEmits<{
 }>();
 
 const activeTab = ref<
-  "ranking" | "components" | "demographics" | "indicators" | "weights" | "table"
+  | "ranking"
+  | "components"
+  | "demographics"
+  | "indicators"
+  | "weights"
+  | "table"
+  | "metadata"
 >("ranking");
 
 const {
@@ -47,17 +54,15 @@ const {
   downloadWeightsCSV,
   uploadWeightsCSV,
 } = useIndicatorWeights(props, emit, indicatorDimensionGroups);
-
-
 </script>
 
 <template>
   <div class="risk-statistics h-full flex flex-col bg-white">
     <!-- Tabs Header -->
-    <div class="flex gap-2 p-4 border-b border-slate-200">
+    <div class="flex gap-2 p-4 border-b border-slate-200 w-full">
       <button
         v-for="tab in isMobile
-          ? ['ranking', 'table', 'indicators', 'weights']
+          ? ['ranking', 'table', 'indicators', 'weights', 'metadata']
           : [
               'ranking',
               'components',
@@ -65,6 +70,7 @@ const {
               'table',
               'indicators',
               'weights',
+              'metadata',
             ]"
         :key="tab"
         @click="activeTab = tab as any"
@@ -138,6 +144,7 @@ const {
         :format-col-name="formatColName"
         @region-hover="emit('region-hover', $event)"
       />
+      <MetadataTab v-else-if="activeTab === 'metadata'" />
     </div>
   </div>
 </template>

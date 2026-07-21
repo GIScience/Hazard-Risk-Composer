@@ -1,20 +1,14 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useMarkdownFile } from "@/composables/useMarkdownFile";
 
 const DEFAULT_TITLE = "Story Map";
 const DEFAULT_SUBTITLE =
   "An interactive walkthrough of how HeiGIT quantifies humanitarian risk.";
 
-const props = withDefaults(
-  defineProps<{
-    title: string;
-    subtitle: string;
-  }>(),
-  {
-    id: "vulnerability",
-  },
-);
+const props = defineProps<{
+  title: string;
+  subtitle: string;
+}>();
 
 const title = computed(() => props.title ?? DEFAULT_TITLE);
 const subtitle = computed(() => props.subtitle ?? DEFAULT_SUBTITLE);
@@ -30,7 +24,7 @@ const subtitle = computed(() => props.subtitle ?? DEFAULT_SUBTITLE);
       <h1 class="mb-4 text-2xl font-bold sm:text-3xl md:text-4xl text-white">
         {{ title }}
       </h1>
-      <p class="max-w-xl text-sm sm:text-base md:text-lg text-white">
+      <p class="max-w-3xl text-sm sm:text-base md:text-base text-white">
         {{ subtitle }}
       </p>
     </div>

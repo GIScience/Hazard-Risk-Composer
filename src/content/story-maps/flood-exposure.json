@@ -9,21 +9,21 @@
   },
   "storyMap": {
     "hero": {
-      "image": "/floods.jpg",
+      "image": "/floods.jpeg",
       "alt": "Flood hazard illustration",
       "title": "Flood Exposure Story Map For Myanmar, Thailand",
-      "subtitle": "Understand how flood exposure indicators are produced and what they mean."
+      "subtitle": "In disaster risk management, knowing where the water flows is only half the challenge; knowing who is in its path is what saves lives. This guide explains how we turn complex flood models into actionable humanitarian insights. Effective humanitarian response requires anticipating the human cost of a disaster. This Story Map breaks down how we combine global flood simulations with demographic data to identify vulnerable communities before the water rises"
     },
     "sidebar": {
       "icon": "mdi-home-flood",
-      "title": "Flood Exposure Story Map",
+      "title": "Flood Exposure",
       "subtitle": "Understand how flood exposure indicators are produced and what they mean.",
       "steps": [
         {
           "number": 1,
           "sectionRef": "sec-scenario",
           "title": "Choose a flood scenario",
-          "body": "We use modelled flood inundation from the JRC Global Flood Awareness System (GloFAS).\n\nA **50-year return period flood** has a 1% chance of being exceeded in any given year."
+          "body": "We use modelled flood inundation data from the JRC **Global Flood Awareness System (GloFAS)**"
         },
         {
           "number": 2,
@@ -35,19 +35,19 @@
           "number": 3,
           "sectionRef": "sec-overlay",
           "title": "Overlay population or facilities",
-          "body": "The flood layer is overlaid with population or facility datasets to identify what is located in the flooded area."
+          "body": "The flood layer is overlaid with population or facility datasets (such as WorldPop 2020) to identify what is located in the flooded area."
         },
         {
           "number": 4,
           "sectionRef": "sec-group",
           "title": "Focus on a population group",
-          "body": "We can calculate exposure for specific groups.\n\nIn this example: **children under 5 years**."
+          "body": "We can calculate exposure for specific vulnerable groups. In this example: **children under 5 years**."
         },
         {
           "number": 5,
           "sectionRef": "sec-aggregate",
           "title": "Aggregate to administrative areas",
-          "body": "Results are aggregated to ADM2 (district) level to allow comparison between areas and support planning and decision-making."
+          "body": "Results are aggregated to the **ADM2 (district)** level."
         }
       ],
       "aside": {
@@ -59,7 +59,7 @@
     },
     "header": {
       "title": "The Core Concept: What does \u201cchildren under 5 exposed to a 50-year flood event above 30 cm\u201d mean ?",
-      "description": "It sounds complex, but it’s simply a combination of Hazard (where the water goes) + Population (who is there). Let's break down how we calculate this, step by step, without the GIS jargon. It estimates how many children under 5 are living in areas that could be flooded with more than 30 cm of water during a flood that has a 1% chance of being exceeded in any given year. To make this actionable, we combine three things: Flood Hazard + Population = Exposed Population"
+      "description": "The Concept: What does it actually mean when we say  \u201cChildren under 5 exposed to a 50-year flood event above 30 cm\u201d? It sounds complex, but it’s simply a combination of Hazard (where the water goes) + Population (who is there). Let's break down how we calculate this, step by step, without the GIS jargon. It estimates how many children under 5 are living in areas that could be flooded with more than 30 cm of water during a flood that has a 1% chance of being exceeded in any given year. To make this actionable, we combine three things: Flood Hazard + Population = Exposed Population"
     },
     "sections": [
       {
@@ -151,8 +151,8 @@
         },
         "note": {
           "variant": "info",
-          "icon": "info",
-          "body": "Depth matters for survival and logistics. Only grid cells with a flood depth strictly above 30 cm are considered in this indicator, filtering out areas with minor water accumulation"
+          "icon": "mdi-information",
+          "body": "Depth matters for survival and logistics. Only grid cells with a flood depth strictly above 30 cm are considered in this indicator, filtering out areas with minor water accumulation."
         },
         "map": {
           "layerId": "flood-depth-50yr",
@@ -215,9 +215,9 @@
           "title": "Population grid (100m)",
           "source": "WorldPop (2020)"
         },
-          "note": {
+        "note": {
           "variant": "info",
-          "icon": "info",
+          "icon": "mdi-information",
           "body": "By stacking the hazard map over the demographic grid, we pinpoint exactly where human settlements intersect with dangerous water levels."
         },
         "map": {
@@ -264,7 +264,7 @@
         },
         "note": {
           "variant": "info",
-          "icon": "info",
+          "icon": "mdi-information",
           "body": "Humanitarian resources are limited and must be prioritized. Only the selected population group located within that specific exposed area is counted."
         },
         "map": {
@@ -281,6 +281,11 @@
         "number": 5,
         "title": "Aggregate to administrative areas",
         "hasInfoIcon": true,
+        "note": {
+          "variant": "info",
+          "icon": "mdi-information",
+          "body": "Pixel-level data is hard to use for operational planning. By grouping the numbers (e.g., District A: 4,200 exposed vs. District D: 320 exposed), we allow decision-makers to easily compare regions and allocate aid where it is needed most."
+        },
         "legend": {
           "title": "Exposed children under 5 (50-year event, >30 cm)",
           "type": "graduated",
@@ -351,17 +356,17 @@
         "variant": "positive",
         "icon": "check-circle",
         "title": "What this indicator tells us",
-        "body": "It estimates how many children under 5 are living in areas that could experience more than 30 cm of flood water during a flood with a 1% annual chance (50-year return period), based on modelled flood data and population estimates."
+        "body": "It provides a calculated estimate of how many children under 5 are living in areas that could experience more than 30 cm of flood water during a major event (1% annual chance). This is based on globally consistent modelled flood data and population estimates, allowing for fair regional comparisons."
       },
       {
         "variant": "warning",
         "icon": "alert-triangle",
         "title": "What this indicator does not tell us",
         "items": [
-          "It does not predict when or if the flood will actually occur.",
-          "It does not account for building quality, protection measures, or elevation of buildings.",
-          "It does not reflect local drainage, informal protection structures, or early warning.",
-          "It shows potential exposure, not actual impacts or damages."
+          "It does not predict exactly when or if the flood will actually occur.",
+          "It does not account for building quality, elevation of specific buildings, or local protection measures like flood walls.",
+          "It does not reflect informal local drainage structures or the effectiveness of early warning systems.",
+          "Most importantly, it shows potential exposure, not actual physical impacts, injuries, or damages."
         ]
       }
     ]

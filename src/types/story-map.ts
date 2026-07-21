@@ -42,10 +42,17 @@ export interface CountrySelector {
 }
 
 export interface StoryMapContent {
+  hero: HeroConfig;
   backLink: LinkRef;
   sidebar: Sidebar;
   header: Header;
   sections: Section[];
+}
+export interface HeroConfig {
+  image: string;
+  alt: string;
+  title: string;
+  subtitle: string;
 }
 export interface LinkRef {
   label: string;

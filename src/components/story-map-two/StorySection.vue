@@ -31,8 +31,8 @@ watch(defaultLayerConfig, (config) => {
     class="story-section scroll-mt-24 h-full border-gray-200 bg-white border rounded-md"
     :class="{ 'is-revealed': revealed }"
   >
-    <div class="flex flex-col gap-y-5">
-      <div class="h-full p-3">
+    <div class="flex flex-col gap-5 lg:gap-4">
+      <div class="p-3 lg:flex-none">
         <h3 class="flex items-center gap-1.5 text-sm font-bold text-gray-900">
           <span class="text-gray-400">{{ section.number }}.</span>
           {{ section.title }}
@@ -77,7 +77,11 @@ watch(defaultLayerConfig, (config) => {
         </div>
       </div>
 
-      <StoryMapPanel :control="section.map" :layer="layerConfig">
+      <StoryMapPanel
+        class="min-h-[300px] min-w-0 flex-1"
+        :control="section.map"
+        :layer="layerConfig"
+      >
         <template v-if="$slots.map" #default="{ layerId }">
           <slot name="map" :layer-id="layerId" />
         </template>

@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
+import { storeToRefs } from "pinia";
 import logo from "@/assets/risk-assessment-lens-logo.png";
+import { useRiskMapStore } from "@/store/riskMapStore";
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     title?: string;
     subtitle?: string;
@@ -15,13 +18,26 @@ withDefaults(
   },
 );
 
+const { selectedCountry, selectedDisaster, riskViewMode } =
+  storeToRefs(useRiskMapStore());
+
+const homeTarget = computed(() => {
+  if (props.homeLink !== "/" || !selectedCountry.value) return props.homeLink;
+
+  const query: Record<string, string> = { country: selectedCountry.value };
+  if (selectedDisaster.value) query.disaster = selectedDisaster.value;
+  if (riskViewMode.value) query.dimension = riskViewMode.value;
+  return { path: "/", query };
+});
 </script>
 
 <template>
-  <header class="w-full sticky top-0 bg-white border-b border-slate-200 shadow-sm z-[100]">
+  <header
+    class="w-full sticky top-0 bg-white border-b border-slate-200 shadow-sm z-[100]"
+  >
     <div class="px-6 py-3 flex items-center justify-between gap-4 mx-auto">
       <RouterLink
-        :to="homeLink"
+        :to="homeTarget"
         class="flex items-center gap-3 min-w-0 group shrink-0"
       >
         <img :src="logo" alt="" class="h-9 w-9 object-contain shrink-0" />

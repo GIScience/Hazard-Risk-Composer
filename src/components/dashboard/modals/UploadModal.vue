@@ -18,7 +18,8 @@ import { downloadIndicatorCSVTemplate } from "@/utils/template";
 
 const store = useRiskMapStore();
 
-const { selectedCountryPcodeFieldMap, selectedCountry } = storeToRefs(store);
+const { selectedCountryPcodeFieldMap, selectedCountry, selectedCountryName } =
+  storeToRefs(store);
 
 const MATCH_THRESHOLD = 0.9;
 
@@ -269,7 +270,7 @@ function handleDownloadTemplate() {
     selectedCountryPcodeFieldMap.value,
     "ADM2_PCODE",
     `custom_Indicator_template`,
-    selectedCountry.value,
+    selectedCountryName.value,
   );
 }
 
@@ -304,12 +305,12 @@ function handleClearFile() {
             </v-icon>
             <div>
               <div class="text-subtitle-1 font-weight-semibold mb-1">
-                Use {{ selectedCountry }} CSV template
+                Use {{ selectedCountryName }} CSV template
               </div>
               <div class="text-body-2 text-sm">
                 Start from a template so your data is formatted correctly. It
-                includes a PCODE column. You can add your own columns for custom
-                dimensions.
+                includes a ADM2_PCODE column. You can add your own columns for custom
+                indicators.
               </div>
             </div>
           </div>
@@ -319,8 +320,8 @@ function handleClearFile() {
               variant="flat"
               color="heigit-red"
               size="small"
-              :title="`Download a CSV template for ${selectedCountry}`"
-              :aria-label="`Download a CSV template for ${selectedCountry}`"
+              :title="`Download a CSV template for ${selectedCountryName}`"
+              :aria-label="`Download a CSV template for ${selectedCountryName}`"
               class="shrink-0 text-white text-none gap-1.5 px-2 font-bold"
               prepend-icon="mdi-download"
               @click="handleDownloadTemplate()"

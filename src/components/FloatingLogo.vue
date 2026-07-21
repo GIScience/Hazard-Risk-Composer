@@ -9,7 +9,7 @@ const props = defineProps<{
     href="https://heigit.org" 
     target="_blank" 
     class="absolute z-40 bg-white/70 backdrop-blur-md border border-slate-200 p-0 rounded-2xl shadow-2xl hover:bg-white transition-all group"
-    :class="props.isMobile ? 'bottom-12 right-3' : 'bottom-12 right-3'"
+    :class="props.isMobile ? 'bottom-12 right-3' : 'bottom-6 right-3'"
     title="Powered by HeiGIT"
   >
     <img 

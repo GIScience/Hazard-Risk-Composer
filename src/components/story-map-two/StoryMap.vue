@@ -23,12 +23,12 @@ const { activeId, scrollTo } = useScrollSpy(
       :subtitle="sm.hero.subtitle"
     />
     <div
-      class="flex flex-col gap-8 lg:flex-row lg:gap-10 w-full px-4 py-8 sm:px-6 lg:px-8"
+      class="flex flex-col gap-8 lg:flex-row lg:gap-2 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8"
     >
       <!-- sidebar -->
-      <aside class="lg:w-[30rem] lg:flex-none">
+      <aside class="lg:w-[24rem] lg:flex-none">
         <div class="lg:sticky lg:top-40 px-4">
-          <div class="mb-5 flex items-start gap-3">
+          <div class="mb-12 flex items-start gap-3">
             <span class="mt-0.5 text-heigit-red">
               <v-icon :icon="sm.sidebar.icon" size="28" />
             </span>
@@ -48,7 +48,7 @@ const { activeId, scrollTo } = useScrollSpy(
             @select="scrollTo"
           />
 
-          <div class="mt-6 rounded-lg bg-red-50 p-4">
+          <div class="mt-6 rounded-lg bg-red-50 p-4 shadow-sm">
             <div
               class="flex items-center gap-2 text-sm font-semibold text-heigit-red"
             >

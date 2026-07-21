@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { DimensionGroup } from "@/composables/useIndicatorColumns";
 import { useRiskMapStore } from "@/store/riskMapStore";
+import { TooltipInfoList } from "@/config";
 
 const riskMapStore = useRiskMapStore();
 
@@ -14,6 +15,18 @@ defineProps<{
   toggleGroup: (columns: string[]) => void;
   formatColName: (col: string) => string;
 }>();
+
+function getTooltipInfo(col: string): string {
+  const matchedKey = Object.keys(TooltipInfoList)
+    .filter((key) => col.includes(key))
+    .sort((a, b) => b.length - a.length)[0] as
+    | keyof typeof TooltipInfoList
+    | undefined;
+
+  return matchedKey
+    ? TooltipInfoList[matchedKey]
+    : "No additional information available.";
+}
 </script>
 
 <template>
@@ -135,8 +148,28 @@ defineProps<{
                       ? 'text-slate-700 font-medium'
                       : 'text-slate-400'
                   "
-                  >{{ formatColName(col) }}</span
-                >
+                  >{{ formatColName(col) }}
+
+                  <v-tooltip
+                    :text="
+                      getTooltipInfo(col) ||
+                      'No additional information available.'
+                    "
+                    eager
+                    location-strategy="connected"
+                    location="top"
+                    content-class="px-2.5 py-1.5 rounded-lg text-xs font-medium leading-relaxed shadow-lg bg-slate-800 text-white border border-slate-200"
+                  >
+                    <template #activator="{ props }">
+                      <v-icon
+                        v-bind="props"
+                        icon="mdi-information"
+                        size="16"
+                        class="text-slate-400 hover:text-slate-600 ml-1"
+                      />
+                    </template>
+                  </v-tooltip>
+                </span>
                 <span
                   class="text-[10px] font-bold tabular-nums min-w-[20px] text-right"
                   :class="{ 'text-slate-300': !isSubIndicatorActive(col) }"
