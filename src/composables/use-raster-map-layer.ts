@@ -48,11 +48,7 @@ export function useRasterMapLayer(options: UseRasterMapLayerOptions) {
       ([bounds, map]) => {
         if (!bounds || !map || hasFitBounds.value) return;
         hasFitBounds.value = true;
-        map.flyTo({
-          center: [(bounds[0] + bounds[2]) / 2, (bounds[1] + bounds[3]) / 2],
-          zoom: 7,
-          speed: 1,
-        });
+        map.fitBounds(bounds, { padding: 40 });
       },
       { immediate: true },
     );
