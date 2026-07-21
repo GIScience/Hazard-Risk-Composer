@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Callout } from "@/types/story-map";
-import Icon from "./Icon.vue";
 
 defineProps<{ callouts: Callout[] }>();
 </script>

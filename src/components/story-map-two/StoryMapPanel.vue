@@ -3,7 +3,7 @@ import type { Legend, layerConfigType, MapConfig } from "@/types/story-map";
 import StoryMapCanvas from "@/components/story-map/StoryMapCanvas.vue";
 
 defineProps<{
-  control?: MapConfig;
+  control: MapConfig;
   layer?: layerConfigType;
   legend?: Legend;
   visible?: boolean;
