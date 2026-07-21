@@ -6,22 +6,30 @@ defineProps<{ callouts: Callout[] }>();
 </script>
 
 <template>
-  <div class="grid grid-cols-1 gap-6 rounded-xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-2">
+  <div
+    class="grid grid-cols-1 gap-6 rounded-xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-2"
+  >
     <div v-for="c in callouts" :key="c.title">
       <div class="flex items-center gap-2">
-        <Icon
-          :name="c.icon"
-          class="h-5 w-5"
-          :class="c.variant === 'positive' ? 'text-emerald-600' : 'text-amber-500'"
+        <v-icon
+          :icon="c.icon"
+          size="20"
+          :class="
+            c.variant === 'positive' ? 'text-emerald-700' : 'text-amber-700'
+          "
         />
         <h4
           class="text-sm font-bold"
-          :class="c.variant === 'positive' ? 'text-emerald-700' : 'text-amber-700'"
+          :class="
+            c.variant === 'positive' ? 'text-emerald-700' : 'text-amber-700'
+          "
         >
           {{ c.title }}
         </h4>
       </div>
-      <p v-if="c.body" class="mt-2 text-sm leading-relaxed text-gray-600">{{ c.body }}</p>
+      <p v-if="c.body" class="mt-2 text-sm leading-relaxed text-gray-600">
+        {{ c.body }}
+      </p>
       <ul v-if="c.items" class="mt-2 space-y-1.5">
         <li
           v-for="(item, i) in c.items"

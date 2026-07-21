@@ -81,6 +81,7 @@ watch(defaultLayerConfig, (config) => {
         class="min-h-[300px] min-w-0 flex-1"
         :control="section.map"
         :layer="layerConfig"
+        :visible="revealed"
       >
         <template v-if="$slots.map" #default="{ layerId }">
           <slot name="map" :layer-id="layerId" />

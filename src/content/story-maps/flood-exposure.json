@@ -354,13 +354,13 @@
     "callouts": [
       {
         "variant": "positive",
-        "icon": "check-circle",
+        "icon": "mdi-check-circle",
         "title": "What this indicator tells us",
         "body": "It provides a calculated estimate of how many children under 5 are living in areas that could experience more than 30 cm of flood water during a major event (1% annual chance). This is based on globally consistent modelled flood data and population estimates, allowing for fair regional comparisons."
       },
       {
         "variant": "warning",
-        "icon": "alert-triangle",
+        "icon": "mdi-alert",
         "title": "What this indicator does not tell us",
         "items": [
           "It does not predict exactly when or if the flood will actually occur.",

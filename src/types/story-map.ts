@@ -172,6 +172,8 @@ export interface MapConfig {
   layerId: string;
   caption?: { icon?: string; label: string; sublabel?: string };
   legend?: Legend;
+  center?: [number, number];
+  zoom?: number;
   controls?: string[];
   results?: Results;
   showOpacityControl?: boolean;

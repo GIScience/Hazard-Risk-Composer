@@ -51,7 +51,7 @@ export function useRasterMapLayer(options: UseRasterMapLayerOptions) {
         map.flyTo({
           center: [(bounds[0] + bounds[2]) / 2, (bounds[1] + bounds[3]) / 2],
           zoom: 7,
-          speed: 0.5,
+          speed: 1,
         });
       },
       { immediate: true },

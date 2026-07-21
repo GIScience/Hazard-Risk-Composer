@@ -6,6 +6,7 @@ defineProps<{
   control?: MapConfig;
   layer?: layerConfigType;
   legend?: Legend;
+  visible?: boolean;
 }>();
 </script>
 
@@ -22,7 +23,8 @@ defineProps<{
 
     <StoryMapCanvas
       v-if="layer"
-      :center="[10, 15]"
+      :center="control.center"
+      :zoom="control.zoom"
       interactive
       :rasterMin="0"
       :rasterMax="1"
@@ -31,6 +33,7 @@ defineProps<{
       :raster-color-scheme="layer.colorScheme"
       :mode="layer.mode"
       :showOpacityControl="control?.showOpacityControl"
+      :visible="visible"
     />
   </div>
 </template>
