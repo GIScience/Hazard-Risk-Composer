@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, nextTick, onMounted, onBeforeUnmount, watch } from "vue";
 import { useIndicatorColumns } from "@/composables/useIndicatorColumns";
 import { useIndicatorWeights } from "@/composables/useIndicatorWeights";
 import RankingTab from "@/components/dashboard/statistics/RankingTab.vue";
@@ -35,6 +35,37 @@ const activeTab = ref<
   | "metadata"
 >("ranking");
 
+const tabsScrollEl = ref<HTMLElement | null>(null);
+const canScrollLeft = ref(false);
+const canScrollRight = ref(false);
+
+function updateScrollState() {
+  const el = tabsScrollEl.value;
+  if (!el) return;
+  canScrollLeft.value = el.scrollLeft > 0;
+  canScrollRight.value = el.scrollLeft + el.clientWidth < el.scrollWidth - 1;
+}
+
+function scrollTabs(direction: "left" | "right") {
+  const el = tabsScrollEl.value;
+  if (!el) return;
+  el.scrollBy({ left: direction === "left" ? -150 : 150, behavior: "smooth" });
+}
+
+onMounted(() => {
+  updateScrollState();
+  window.addEventListener("resize", updateScrollState);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateScrollState);
+});
+
+watch(
+  () => props.isMobile,
+  () => nextTick(updateScrollState),
+);
+
 const {
   disasterLabel,
   formatColName,
@@ -59,35 +90,61 @@ const {
 <template>
   <div class="risk-statistics h-full flex flex-col bg-white">
     <!-- Tabs Header -->
-    <div class="flex gap-2 p-4 border-b border-slate-200 w-full">
+    <div class="relative flex items-center gap-1 p-4 border-b border-slate-200 w-full">
       <button
-        v-for="tab in isMobile
-          ? ['ranking', 'table', 'indicators', 'weights', 'metadata']
-          : [
-              'ranking',
-              'components',
-              'demographics',
-              'table',
-              'indicators',
-              'weights',
-              'metadata',
-            ]"
-        :key="tab"
-        @click="activeTab = tab as any"
-        class="px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-colors"
-        :class="
-          activeTab === tab
-            ? 'bg-heigit-red text-white'
-            : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-        "
+        v-if="canScrollLeft"
+        type="button"
+        aria-label="Scroll tabs left"
+        class="flex-none p-0 text-heigit-red flex items-center justify-center hover:bg-slate-100 absolute left-6 bg-white rounded-md shadow-2xl "
+        @click="scrollTabs('left')"
       >
-        {{ tab }}
+        <v-icon icon="mdi-chevron-left" size="24" />
+      </button>
+
+      <div
+        ref="tabsScrollEl"
+        class="flex gap-2 overflow-x-auto no-scrollbar scroll-smooth"
+        @scroll="updateScrollState"
+      >
+        <button
+          v-for="tab in isMobile
+            ? ['ranking', 'table', 'indicators', 'weights', 'metadata']
+            : [
+                'ranking',
+                'components',
+                'demographics',
+                'table',
+                'indicators',
+                'weights',
+                'metadata',
+              ]"
+          :key="tab"
+          @click="activeTab = tab as any"
+          class="flex-none px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-colors"
+          :class="
+            activeTab === tab
+              ? 'bg-heigit-red text-white'
+              : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+          "
+        >
+          {{ tab }}
+        </button>
+      </div>
+
+      <button
+        v-if="canScrollRight"
+        type="button"
+        aria-label="Scroll tabs right"
+        class="flex-none p-0 text-heigit-red flex items-center justify-center hover:bg-slate-100 absolute right-6 bg-white rounded-md shadow-2xl "
+        @click="scrollTabs('right')"
+      >
+        <v-icon icon="mdi-chevron-right" size="24" />
       </button>
     </div>
 
     <!-- Content section -->
     <div
-      class="flex-1 p-4 flex flex-col min-h-0"
+      class="flex-1 p-2 flex flex-col min-h-0"
       :class="activeTab !== 'table' ? 'overflow-y-auto custom-scrollbar' : ''"
     >
       <RankingTab
@@ -150,6 +207,14 @@ const {
 </template>
 
 <style scoped>
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;

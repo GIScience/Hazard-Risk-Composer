@@ -419,7 +419,7 @@ defineExpose({
                 : 'w-12'
               : props.isMobile
                 ? 'w-45'
-                : 'w-60',
+                : 'w-56',
           )
         "
       >
@@ -442,7 +442,7 @@ defineExpose({
                 <label
                   :class="
                     cn(
-                      'block font-bold uppercase tracking-widest whitespace-nowrap text-slate-500',
+                      'block font-bold tracking-widest whitespace-nowrap text-slate-500',
                       props.isMobile ? 'text-[8px]' : 'text-[11px]',
                     )
                   "

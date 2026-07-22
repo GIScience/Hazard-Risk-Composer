@@ -102,6 +102,6 @@ watch(
     >
       Top 15 Regions
     </h3>
-    <div id="ranking-chart" class="flex-1 w-[45rem]"></div>
+    <div id="ranking-chart" class="flex-1 w-[43rem]"></div>
   </section>
 </template>

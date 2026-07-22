@@ -106,7 +106,7 @@ function handleUpload(payload: Parameters<typeof mergeCustomIndicators>[0]) {
           viewMode === 'HOME'
             ? 'w-full'
             : showAnalysis
-              ? 'w-full md:w-1/2'
+              ? 'w-full md:w-3/5'
               : 'w-full',
         ]"
       >
