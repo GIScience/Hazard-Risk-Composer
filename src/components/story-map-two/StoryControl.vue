@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { Control, layerConfigType } from "@/types/story-map";
-import Icon from "./Icon.vue";
 
 const props = defineProps<{ control: Control }>();
 
@@ -50,9 +49,9 @@ function handleSegChange(value: string) {
             : 'border-gray-200 text-gray-500 hover:border-gray-300'
         "
       >
-        <Icon
+        <v-icon
           v-if="opt.icon"
-          :name="opt.icon"
+          :icon="opt.icon"
           class="h-5 w-5"
           :class="segValue === opt.value ? 'text-blue-600' : 'text-gray-400'"
         />

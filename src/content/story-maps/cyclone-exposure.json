@@ -10,32 +10,32 @@
     "storyMap": {
         "hero": {
             "image": "/floods.jpg",
-            "alt": "Cyclone illustration",
-            "title": "Flood Exposure Story Map For Myanmar, Thailand",
-            "subtitle": "Understand how flood exposure indicators are produced and what they mean."
+            "alt": "Cyclone Story Map",
+            "title": "Cyclone Exposure For Myanmar, Thailand",
+            "subtitle": "This Story Map illustrates how we translate complex wind-speed models into clear, actionable data to prioritize humanitarian aid for the most vulnerable populations. When a cyclone strikes, extreme winds threaten both lives and infrastructure. This guide explains how we merge global wind hazard models with population grids to pinpoint exactly where vulnerable communities face the highest risk."
         },
         "sidebar": {
-            "icon": "mdi-home-flood",
-            "title": "Flood Exposure Story Map",
-            "subtitle": "Understand how flood exposure indicators are produced and what they mean.",
+            "icon": "mdi-weather-hurricane",
+            "title": "Cyclone Exposure",
+            "subtitle": "Understand how cyclone exposure indicators are produced and what they mean",
             "steps": [
                 {
                     "number": 1,
                     "sectionRef": "sec-scenario",
-                    "title": "Choose a flood scenario",
-                    "body": "We use modelled flood inundation from the JRC Global Flood Awareness System (GloFAS).\n\nA **50-year return period flood** has a 1% chance of being exceeded in any given year."
+                    "title": "Choose a cyclone scenario (Return period)",
+                    "body": " We use modelled tropical cyclone wind data from global standard models **(e.g., the Global Model of Cyclone Wind or the Columbia Tropical Cyclone Hazard model - CHAZ)**"
                 },
                 {
                     "number": 2,
                     "sectionRef": "sec-depth",
-                    "title": "Apply the flood-depth threshold",
-                    "body": "We only count areas where modelled flood depth is above a defined threshold.\n\nIn this example: above **30 cm**."
+                    "title": "Apply the wind-speed threshold",
+                    "body": "We only count areas where the modelled sustained wind speed is above a defined threshold. In this example: above **119 km/h**."
                 },
                 {
                     "number": 3,
                     "sectionRef": "sec-overlay",
                     "title": "Overlay population or facilities",
-                    "body": "The flood layer is overlaid with population or facility datasets to identify what is located in the flooded area."
+                    "body": "The flood layer is overlaid with population or facility datasets (such as WorldPop 2020) to identify what is located in the flooded area."
                 },
                 {
                     "number": 4,
@@ -58,8 +58,8 @@
             }
         },
         "header": {
-            "title": "The Core Concept: What does \u201cchildren under 5 exposed to a 50-year flood event above 30 cm\u201d mean ?",
-            "description": "It sounds complex, but it’s simply a combination of Hazard (where the water goes) + Population (who is there). Let's break down how we calculate this, step by step, without the GIS jargon. It estimates how many children under 5 are living in areas that could be flooded with more than 30 cm of water during a flood that has a 1% chance of being exceeded in any given year. To make this actionable, we combine three things: Flood Hazard + Population = Exposed Population"
+            "title": "The Core Concept: What does \u201cchildren under 5 exposed to a 50-year cyclone event above 19 km/h\u201d mean ?",
+            "description": "The Concept: It estimates how many children under 5 are living in areas that could be hit by extreme winds of more than 119 km/h (Category 1 hurricane force) during a cyclone that has a 1% chance of being exceeded in any given year. Basically, Cyclone Wind Hazard + Population = Exposed Population."
         },
         "sections": [
             {
@@ -122,7 +122,7 @@
                 "note": {
                     "variant": "info",
                     "icon": "mdi-information",
-                    "body": " \u201c50-year return period flood\u201d does not mean it happens exactly once every 50 years. It means there is a 1% chance of a flood this size being exceeded in any given year. Naturally, a 50-year flood covers a larger area than a 10-year flood, but a smaller area than 100- or 500-year events."
+                    "body": "A \"50-year return period cyclone\" does not mean it happens once every 50 years. It means there is a 1% chance of a tropical cyclone of this wind intensity occurring in any given year. Naturally, a 50-year cyclone covers a larger impact area with extreme winds than a 10-year event."
                 },
                 "map": {
                     "controls": [
@@ -136,22 +136,22 @@
             {
                 "id": "sec-depth",
                 "number": 2,
-                "title": "Flood-depth threshold",
+                "title": "Wind-speed threshold",
                 "hasInfoIcon": true,
                 "control": {
                     "type": "segmented",
                     "id": "overlay-type",
                     "options": [
                         {
-                            "value": "30",
-                            "label": "30cm",
+                            "value": "119",
+                            "label": "119km/h",
                             "selected": true
                         }
                     ]
                 },
                 "note": {
                     "variant": "info",
-                    "icon": "info",
+                    "icon": "mdi-information",
                     "body": "Depth matters for survival and logistics. Only grid cells with a flood depth strictly above 30 cm are considered in this indicator, filtering out areas with minor water accumulation"
                 },
                 "map": {
@@ -217,8 +217,8 @@
                 },
                 "note": {
                     "variant": "info",
-                    "icon": "info",
-                    "body": "By stacking the hazard map over the demographic grid, we pinpoint exactly where human settlements intersect with dangerous water levels."
+                    "icon": "mdi-information",
+                    "body": "By stacking the hazard map over the demographic grid, we pinpoint exactly where human settlements intersect with dangerous water levels"
                 },
                 "map": {
                     "layerId": "population-grid-100m",
@@ -240,23 +240,23 @@
                     "id": "population-group",
                     "options": [
                         {
-                            "value": "total",
+                            "value": "mdi-human-male-female-child",
                             "label": "Total population",
                             "icon": "user"
                         },
                         {
-                            "value": "women",
+                            "value": "mdi-human-female-female",
                             "label": "Women",
                             "icon": "user"
                         },
                         {
-                            "value": "children-under-5",
+                            "value": "mdi-human-child",
                             "label": "Children under 5",
                             "icon": "baby",
                             "selected": true
                         },
                         {
-                            "value": "elderly",
+                            "value": "mdi-human-cane",
                             "label": "Elderly (65+)",
                             "icon": "user-round"
                         }
@@ -264,7 +264,7 @@
                 },
                 "note": {
                     "variant": "info",
-                    "icon": "info",
+                    "icon": "mdi-information",
                     "body": "Humanitarian resources are limited and must be prioritized. Only the selected population group located within that specific exposed area is counted."
                 },
                 "map": {

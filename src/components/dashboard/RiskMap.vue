@@ -74,6 +74,7 @@ function selectDimension(value: RiskViewMode) {
 
 function handleMapLoad(mapInstance: maplibregl.Map) {
   // Add World Boundaries for Click Interaction
+  updateLayer();
   mapInstance.addSource("world", {
     type: "geojson",
     data: `${import.meta.env.BASE_URL}data/world.json`,
@@ -115,32 +116,6 @@ function handleMapLoad(mapInstance: maplibregl.Map) {
       ? ["in", ["get", "iso_a3"], ["literal", validCountries]]
       : ["==", "iso_a3", "DOES_NOT_EXIST"],
   });
-
-  mapInstance.addLayer({
-    id: interactLayerId + "-outline",
-    type: "line",
-    source: "world",
-    paint: {
-      "line-color": "#ca2333",
-      "line-width": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        2, // hover -> thicker
-        1, // default -> subtle
-      ],
-      "line-opacity": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        1, // hover -> full
-        0.4, // default -> visible but subdued
-      ],
-    },
-    filter: isLoaded
-      ? ["in", ["get", "iso_a3"], ["literal", validCountries]]
-      : ["==", "iso_a3", "DOES_NOT_EXIST"],
-  });
-
-  updateLayer();
 
   const popup = new maplibregl.Popup({
     closeButton: false,
@@ -226,6 +201,8 @@ function handleMapLoad(mapInstance: maplibregl.Map) {
 
   mapInstance.on("style.load", onStyleLoad);
   window.addEventListener("resize", resizeHandler);
+
+  onStyleLoad();
 }
 
 async function updateLayer() {
@@ -433,7 +410,9 @@ defineExpose({
         :class="
           cn(
             'absolute z-[60] left-4 flex flex-col gap-2 rounded-lg bg-white/90 shadow-sm backdrop-blur-md transition-[width] duration-300 ease-in-out',
-            props.isMobile ? 'bottom-36 px-2 py-1.5' : 'top-8 rounded-md px-3 py-2',
+            props.isMobile
+              ? 'bottom-36 px-2 py-1.5'
+              : 'top-8 rounded-md px-3 py-2',
             isLayersCollapsed
               ? props.isMobile
                 ? 'w-10'

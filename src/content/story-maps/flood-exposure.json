@@ -242,23 +242,23 @@
             {
               "value": "total",
               "label": "Total population",
-              "icon": "user"
+              "icon": "mdi-human-male-female-child"
             },
             {
               "value": "women",
               "label": "Women",
-              "icon": "user"
+              "icon": "mdi-human-female-female"
             },
             {
-              "value": "children-under-5",
+              "value": "child",
               "label": "Children under 5",
-              "icon": "baby",
+              "icon": "mdi-human-child",
               "selected": true
             },
             {
               "value": "elderly",
               "label": "Elderly (65+)",
-              "icon": "user-round"
+              "icon": "mdi-human-cane"
             }
           ]
         },
