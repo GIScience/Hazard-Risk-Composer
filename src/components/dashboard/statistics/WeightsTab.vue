@@ -88,7 +88,7 @@ const uploadInput = ref<HTMLInputElement | null>(null);
         <!-- Methodology Link -->
         <div class="absolute right-4 top-1/2 -translate-y-1/2">
           <a
-            href="https://giscience.github.io/gis-training-resource-center/content/GIS_AA/en_qgis_risk_assessment_plugin.html#methodology"
+            href="https://giscience.github.io/gis-training-resource-center/en/GIS_AA/en_qgis_risk_assessment_plugin.html#methodology"
             target="_blank"
             rel="noopener noreferrer"
             class="text-heigit-red hover:text-red-700 text-xs font-semibold underline-offset-2 hover:underline inline-flex items-center gap-1 transition-colors"
