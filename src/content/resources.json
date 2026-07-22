@@ -8,7 +8,7 @@
     "title": "Methodology",
     "description": "Access the underlying GAIA pipeline and training center.",
     "buttonText": "View Documentation",
-    "link": "https://giscience.github.io/gis-training-resource-center/en/GIS_AA/en_gaia_indicators_processing.html"
+    "link": "https://giscience.github.io/gis-training-resource-center/en/GIS_AA/en_gaia_indicators_processing.html#methodology"
   },
   "method": {
     "title": "Method",
@@ -56,12 +56,12 @@
       {
         "title": "QGIS Plugin",
         "description": "Learn how to calculate your own risk assessment using our plugin.",
-        "link": "https://giscience.github.io/gis-training-resource-center/content/GIS_AA/en_qgis_risk_assessment_plugin.html"
+        "link": "https://giscience.github.io/gis-training-resource-center/en/GIS_AA/en_qgis_risk_assessment_plugin.html#methodology"
       },
       {
         "title": "HDX",
         "description": "Explore the Humanitarian Data Exchange for additional datasets.",
-        "link": "https://data.humdata.org/m/dataset/bangladesh---risk-assessment-indicators"
+        "link": "https://data.humdata.org/m/dataset/{{ country }}---risk-assessment-indicators"
       }
     ]
   },

@@ -1,9 +1,20 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { header, introHtml, methodology, method, limitationsTitle, limitations, resources, contact } from '@/content/resources.json';
+import { useRiskMapStore } from '@/store/riskMapStore';
 
 defineEmits<{
   (e: 'close'): void;
 }>();
+
+const riskMapStore = useRiskMapStore();
+
+const resourceItems = computed(() =>
+  resources.items.map((resource) => ({
+    ...resource,
+    link: resource.link.replace('{{ country }}', riskMapStore.selectedCountryName.toLowerCase()),
+  }))
+);
 
 const openLink = (url: string) => window.open(url, '_blank', 'noopener,noreferrer');
 </script>
@@ -90,7 +101,7 @@ const openLink = (url: string) => window.open(url, '_blank', 'noopener,noreferre
           <h3 class="text-xl font-bold text-slate-900 mb-4">{{ resources.title }}</h3>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a v-for="(resource, i) in resources.items" :key="`res-${i}`" :href="resource.link" target="_blank"
+            <a v-for="(resource, i) in resourceItems" :key="`res-${i}`" :href="resource.link" target="_blank"
               class="group block p-4 rounded-lg border border-slate-200 hover:border-heigit-red transition-colors bg-slate-50">
               <h4 class="font-bold text-slate-800 text-sm group-hover:text-heigit-red transition-colors">
                 {{ resource.title }}
