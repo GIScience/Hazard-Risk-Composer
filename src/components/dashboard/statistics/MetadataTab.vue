@@ -1,32 +1,77 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { DataSourcesURL } from "@/config";
+import { HAZARDS } from "@/enums/hazards";
+import { cn } from "@/utils/cn";
 
 interface DataSource {
   name: string;
   description: string;
   url: string | null;
+  hazard_type: string[];
 }
 
-const data = ref<DataSource[]>([]);
+// To be replaced with a fetch from the API once the file returns the right json is available
+const data = ref<DataSource[]>([
+  {
+    name: "Worldpop",
+    description: "2030 Projection",
+    url: "https://hub.worldpop.org/geodata/listing?id=135",
+    hazard_type: ["flood", "cyclone"],
+  },
+  {
+    name: "OpenStreetMap",
+    description: "March 2026",
+    url: null,
+    hazard_type: ["flood", "cyclone"],
+  },
+  {
+    name: "Global Human Settlement Layer",
+    description: "2030 Projection",
+    url: "https://human-settlement.emergency.copernicus.eu/ghs_pop2023.php",
+    hazard_type: ["flood", "cyclone"],
+  },
+  {
+    name: "JRC Flood Hazard Map",
+    description: "2024",
+    url: "https://data.jrc.ec.europa.eu/dataset/jrc-floods-floodmapgl_rp50y-tif",
+    hazard_type: ["flood"],
+  },
+  {
+    name: "International Best Track Archive for Climate Stewardship",
+    description: "March 2026",
+    url: "https://www.ncei.noaa.gov/products/international-best-track-archive",
+    hazard_type: ["cyclone"],
+  },
+]);
+
 const isLoading = ref(false);
+const selectedHazard = ref<string | null>(HAZARDS[0].keyword);
 
-async function fetchDataSources() {
-  isLoading.value = true;
-  try {
-    const response = await fetch(DataSourcesURL);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    data.value = await response.json();
-  } catch (error) {
-    console.error("Error fetching data sources:", error);
-  } finally {
-    isLoading.value = false;
-  }
-}
-
-onMounted(() => {
-  fetchDataSources();
+// Filter the data based on the selected hazard type
+const filteredData = computed(() => {
+  if (!selectedHazard.value) return data.value;
+  return data.value.filter((item) =>
+    item.hazard_type.includes(selectedHazard.value as string),
+  );
 });
+
+// async function fetchDataSources() {
+//   isLoading.value = true;
+//   try {
+//     const response = await fetch(DataSourcesURL);
+//     if (!response.ok) throw new Error(`HTTP ${response.status}`);
+//     data.value = await response.json();
+//   } catch (error) {
+//     console.error("Error fetching data sources:", error);
+//   } finally {
+//     isLoading.value = false;
+//   }
+// }
+
+// onMounted(() => {
+//   fetchDataSources();
+// });
 </script>
 
 <template>
@@ -35,7 +80,7 @@ onMounted(() => {
       Data Sources
     </h3>
     <div id="data-sources" class="flex-1 space-y-6 w-[43rem]">
-      <!-- <div class="flex flex-wrap bg-slate-100 rounded-md shadow-sm w-fit">
+      <div class="flex flex-wrap bg-slate-100 rounded-md shadow-sm w-fit">
         <v-btn
           v-for="(hazard, index) in HAZARDS"
           variant="outlined"
@@ -55,7 +100,7 @@ onMounted(() => {
         >
           {{ hazard.label }}
         </v-btn>
-      </div> -->
+      </div>
       <div
         class="overflow-auto border border-slate-200 rounded-lg custom-scrollbar bg-white"
       >
@@ -84,7 +129,7 @@ onMounted(() => {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in data" :key="item.name">
+            <tr v-for="item in filteredData" :key="item.name">
               <td
                 class="px-4 py-2 font-medium text-slate-900 break-words border-b border-slate-100"
               >
