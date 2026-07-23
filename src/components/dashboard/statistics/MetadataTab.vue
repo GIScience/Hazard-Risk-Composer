@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
-import { DataSourcesURL } from "@/config";
+import { ref, computed } from "vue";
+// import { DataSourcesURL } from "@/config";
 import { HAZARDS } from "@/enums/hazards";
 import { cn } from "@/utils/cn";
 
@@ -45,7 +45,7 @@ const data = ref<DataSource[]>([
   },
 ]);
 
-const isLoading = ref(false);
+// const isLoading = ref(false);
 const selectedHazard = ref<string | null>(HAZARDS[0].keyword);
 
 // Filter the data based on the selected hazard type
